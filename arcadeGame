@@ -1,6 +1,15 @@
 /*
  * File: Breakout.java
  * -------------------
+ * Name: Арканоїд
+ * Section Leader: Stefanyuk, Reshetar
+ *
+ * This file will eventually implement the game of Breakout.
+ */
+
+/*
+ * File: Breakout.java
+ * -------------------
  * Name:
  * Section Leader:
  *
@@ -60,25 +69,61 @@ public class setup extends GraphicsProgram {
     /** Number of turns */
     private static final int NTURNS = 3;
     private GRect paddle;
+    private static int life = 3;
+    private GRect paddle2;
+    private GRect paddle3;
+    private GRect paddle4;
     private GOval ball;
     /* Method: run() */
     /** Runs the Breakout program. */
     public void setupTheGame(){
         this.setSize(800,800);
-        paddle = new GRect(PADDLE_WIDTH, PADDLE_HEIGHT);
+        int width = 100;
+        int height = 100;
+        label2 = new GLabel("Current life"+life);
+        label2.setFont("Calibri-18");
+        label2.setColor(Color.red);
+        add(label2,50,50);
+        paddle = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
         paddle.setFilled(true);
         paddle.setColor(Color.green);
-        add(paddle,0,500);
+        add(paddle,width,height);
+        paddle2 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
+        paddle2.setFilled(true);
+        paddle2.setColor(Color.green);
+        add(paddle2,130,height);
+        paddle3 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
+        paddle3.setFilled(true);
+        paddle3.setColor(Color.green);
+        add(paddle3,160,height);
+        paddle4 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
+        paddle4.setFilled(true);
+        paddle4.setColor(Color.green);
+        add(paddle4,160,500);
+
+
         ball = new GOval(BALL_RADIUS, BALL_RADIUS);
         ball.setFilled(true);
         ball.setColor(Color.black);
-        add(ball,(double) getWidth() / 2, (double) getHeight() / 2);
+        add(ball,0, 0);
     }
     public void ballMove() {
 
             if (o==0){
             if (ball.getX() + BALL_RADIUS <= getWidth() && ball.getY()+BALL_RADIUS <=getHeight()) {
                 ball.move(X_SPEED, Y_SPEED);
+                if (ball.getY()>=paddle4.getY()){
+                    life -= 1;
+
+                    remove(label2);
+                    label2 = new GLabel("Current life"+life);
+                    label2.setFont("Calibri-18");
+                    label2.setColor(Color.red);
+                    add(label2,50,50);
+                }
+                if (life == 0){
+                    game = false;
+                }
                 if (ball.getX()+BALL_RADIUS >=getWidth()){
                 o = 1;}
                 if(ball.getY()+BALL_RADIUS>=getHeight()){
@@ -123,19 +168,88 @@ public class setup extends GraphicsProgram {
     public void hitThePaddle(){
         GObject collision = getElementAt(ball.getX(),ball.getY());
         if(collision == paddle){
-            remove(ball);
+            if (o == 3){
             remove(paddle);
-            game = false;
+            paddle = null;
+            o = 0;
+            }
+            if (o == 2){
+                remove(paddle);
+                paddle = null;
+                o = 1;
+            }
+            if (o == 0){
+                remove(paddle);
+                paddle = null;
+                o = 3;
+            }
+            if (o == 1){
+                remove(paddle);
+                paddle = null;
+                o = 2;
+            }
+
+        }
+        if(collision == paddle2){
+
+            if (o == 3){
+                remove(paddle2);
+                paddle2 = null;
+                o = 0;
+            }
+            if (o == 2){
+                remove(paddle2);
+                paddle2 = null;
+                o = 1;
+            }
+            if (o == 0){
+                remove(paddle2);
+                paddle2 = null;
+                o = 3;
+            }
+            if (o == 1){
+                remove(paddle2);
+                paddle2 = null;
+                o = 2;
+            }
+
+        }
+        if(collision == paddle3){
+            if (o == 3){
+                remove(paddle3);
+                paddle3 = null;
+                o = 0;
+            }
+            if (o == 2){
+                remove(paddle3);
+                paddle3 = null;
+                o = 1;
+            }
+            if (o == 0){
+                remove(paddle3);
+                paddle3 = null;
+                o = 3;
+            }
+            if (o == 1){
+                remove(paddle3);
+                paddle3 = null;
+                o = 2;
+            }
         }
     }
     public void paddleMove(MouseEvent e){
         paddle.move(e.getX(),0);
     }
     public void checkForWinner(){
-        if (game == false){
+        if (game == false && paddle ==null && paddle2 == null && paddle3 == null){
             label = new GLabel("You win");
             label.setFont("Bahnshift-18");
             add(label,100,100);
+        }
+        else if ((paddle !=null || paddle2 != null || paddle3 != null) && life == 0){
+            label1 = new GLabel("You lose");
+            label1.setFont("Bahnshift-18");
+            add(label1,100,100);
         }
     }
     public void run() {
@@ -157,5 +271,7 @@ public class setup extends GraphicsProgram {
     private boolean game = true;
     private static int o = 0;
     private GLabel label;
+    private GLabel label1;
+    private GLabel label2;
     private RandomGenerator r_gen = RandomGenerator.getInstance();
 }
