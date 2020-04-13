@@ -1,15 +1,6 @@
 /*
  * File: Breakout.java
  * -------------------
- * Name: Арканоїд
- * Section Leader: Stefanyuk, Reshetar
- *
- * This file will eventually implement the game of Breakout.
- */
-
-/*
- * File: Breakout.java
- * -------------------
  * Name:
  * Section Leader:
  *
@@ -18,35 +9,35 @@
 
 import acm.graphics.*;
 import acm.program.*;
-import acm.util.*;
+//import acm.util.*;
 
-import java.applet.*;
+//import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 
 public class setup extends GraphicsProgram {
     //Hello
     /** Width and height of application window in pixels */
     public static final int APPLICATION_WIDTH = 400;
-    public static final int APPLICATION_HEIGHT = 600;
+//    public static final int APPLICATION_HEIGHT = 600;
 
     /** Dimensions of game board (usually the same) */
     private static final int WIDTH = APPLICATION_WIDTH;
-    private static final int HEIGHT = APPLICATION_HEIGHT;
+//    private static final int HEIGHT = APPLICATION_HEIGHT;
 
     /** Dimensions of the paddle */
     private static final int PADDLE_WIDTH = 60;
-    private static final int PADDLE_HEIGHT = 10;
+//    private static final int PADDLE_HEIGHT = 10;
 
-    /** Offset of the paddle up from the bottom */
-    private static final int PADDLE_Y_OFFSET = 30;
+//    /** Offset of the paddle up from the bottom */
+//    private static final int PADDLE_Y_OFFSET = 30;
 
     /** Number of bricks per row */
     private static final int NBRICKS_PER_ROW = 10;
 
-    /** Number of rows of bricks */
-    private static final int NBRICK_ROWS = 10;
+//    /** Number of rows of bricks */
+//    private static final int NBRICK_ROWS = 10;
 
     /** Separation between bricks */
     private static final int BRICK_SEP = 4;
@@ -60,16 +51,14 @@ public class setup extends GraphicsProgram {
 
     /** Radius of the ball in pixels */
     private static final int BALL_RADIUS = 10;
-    private static final int PAUSE = 3;
+    private static final int PAUSE = 5;
 
-    /** Offset of the top brick row from the top */
-    private static final int BRICK_Y_OFFSET = 70;
-    private int X_SPEED = 2;
-    private int Y_SPEED = 1;
+//    /** Offset of the top brick row from the top */
+//    private static final int BRICK_Y_OFFSET = 70;
     /** Number of turns */
-    private static final int NTURNS = 3;
+//    private static final int NTURNS = 3;
     private GRect paddle;
-    private static int life = 3;
+    private static int life = 2;
     private GRect paddle2;
     private GRect paddle3;
     private GRect paddle4;
@@ -78,49 +67,28 @@ public class setup extends GraphicsProgram {
     /** Runs the Breakout program. */
     public void setupTheGame(){
         this.setSize(800,800);
-        int width = 100;
-        int height = 100;
-        label2 = new GLabel("Current life"+life);
-        label2.setFont("Calibri-18");
-        label2.setColor(Color.red);
-        add(label2,50,50);
-        paddle = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
-        paddle.setFilled(true);
-        paddle.setColor(Color.green);
-        add(paddle,width,height);
-        paddle2 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
-        paddle2.setFilled(true);
-        paddle2.setColor(Color.green);
-        add(paddle2,130,height);
-        paddle3 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
-        paddle3.setFilled(true);
-        paddle3.setColor(Color.green);
-        add(paddle3,160,height);
+//        int width = 100;
+//        int height = 100;
+
         paddle4 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
         paddle4.setFilled(true);
-        paddle4.setColor(Color.green);
+        paddle4.setColor(Color.blue);
         add(paddle4,160,500);
 
 
         ball = new GOval(BALL_RADIUS, BALL_RADIUS);
         ball.setFilled(true);
         ball.setColor(Color.black);
-        add(ball,0, 0);
+        add(ball,getWidth()/2.0, getHeight()/2.0);
     }
     public void ballMove() {
 
-            if (o==0){
+        int BALL_SPEED = 2;
+        int y_SPEED = 1;
+        if (o==0){
             if (ball.getX() + BALL_RADIUS <= getWidth() && ball.getY()+BALL_RADIUS <=getHeight()) {
-                ball.move(X_SPEED, Y_SPEED);
-                if (ball.getY()>=paddle4.getY()){
-                    life -= 1;
+                ball.move(BALL_SPEED, y_SPEED);
 
-                    remove(label2);
-                    label2 = new GLabel("Current life"+life);
-                    label2.setFont("Calibri-18");
-                    label2.setColor(Color.red);
-                    add(label2,50,50);
-                }
                 if (life == 0){
                     game = false;
                 }
@@ -135,7 +103,7 @@ public class setup extends GraphicsProgram {
 
             if (o == 1){
                 if (ball.getY() + BALL_RADIUS <= getHeight() && ball.getX()>=0) {
-                    ball.move(-X_SPEED, Y_SPEED);
+                    ball.move(-BALL_SPEED, y_SPEED);
                     if (ball.getY()+BALL_RADIUS >= getHeight()){
                     o = 2;}
                     if(ball.getX()<=0){
@@ -145,7 +113,7 @@ public class setup extends GraphicsProgram {
             }
         if (o == 2){
             if (ball.getX()  >=0  && ball.getY()>=0) {
-                ball.move(-X_SPEED, -Y_SPEED);
+                ball.move(-BALL_SPEED, -y_SPEED);
                 if (ball.getX()<= 0){
                     o = 3;}
                 if (ball.getY()<=0){
@@ -155,7 +123,7 @@ public class setup extends GraphicsProgram {
         }
         if (o == 3){
             if (ball.getY()>0 && ball.getX()+BALL_RADIUS<=getWidth()){
-                ball.move(X_SPEED,-Y_SPEED);
+                ball.move(BALL_SPEED,-y_SPEED);
             }
             if (ball.getX()+BALL_RADIUS >=getWidth()){
                 o = 2;
@@ -165,113 +133,149 @@ public class setup extends GraphicsProgram {
             }
         }
     }
-    public void hitThePaddle(){
+//    public void hitThePaddle(){
+//        GObject collision = getElementAt(ball.getX(),ball.getY());
+//        if(collision == paddle){
+//            if (o == 3){
+//            remove(paddle);
+//            paddle = null;
+//            o = 0;
+//            }
+//            if (o == 2){
+//                remove(paddle);
+//                paddle = null;
+//                o = 1;
+//            }
+//            if (o == 0){
+//                remove(paddle);
+//                paddle = null;
+//                o = 3;
+//            }
+//            if (o == 1){
+//                remove(paddle);
+//                paddle = null;
+//                o = 2;
+//            }
+//
+//        }
+//        if(collision == paddle2){
+//
+//            if (o == 3){
+//                remove(paddle2);
+//                paddle2 = null;
+//                o = 0;
+//            }
+//            if (o == 2){
+//                remove(paddle2);
+//                paddle2 = null;
+//                o = 1;
+//            }
+//            if (o == 0){
+//                remove(paddle2);
+//                paddle2 = null;
+//                o = 3;
+//            }
+//            if (o == 1){
+//                remove(paddle2);
+//                paddle2 = null;
+//                o = 2;
+//            }
+//
+//        }
+//        if(collision == paddle3){
+//            if (o == 3){
+//                remove(paddle3);
+//                paddle3 = null;
+//                o = 0;
+//            }
+//            if (o == 2){
+//                remove(paddle3);
+//                paddle3 = null;
+//                o = 1;
+//            }
+//            if (o == 0){
+//                remove(paddle3);
+//                paddle3 = null;
+//                o = 3;
+//            }
+//            if (o == 1){
+//                remove(paddle3);
+//                paddle3 = null;
+//                o = 2;
+//            }
+//        }
+//    }
+    public void hitTheRocket(){
         GObject collision = getElementAt(ball.getX(),ball.getY());
-        if(collision == paddle){
-            if (o == 3){
-            remove(paddle);
-            paddle = null;
-            o = 0;
-            }
-            if (o == 2){
-                remove(paddle);
-                paddle = null;
-                o = 1;
-            }
+        if (collision == paddle4){
             if (o == 0){
-                remove(paddle);
-                paddle = null;
                 o = 3;
             }
             if (o == 1){
-                remove(paddle);
-                paddle = null;
                 o = 2;
             }
 
-        }
-        if(collision == paddle2){
-
-            if (o == 3){
-                remove(paddle2);
-                paddle2 = null;
-                o = 0;
-            }
-            if (o == 2){
-                remove(paddle2);
-                paddle2 = null;
-                o = 1;
-            }
-            if (o == 0){
-                remove(paddle2);
-                paddle2 = null;
-                o = 3;
-            }
-            if (o == 1){
-                remove(paddle2);
-                paddle2 = null;
-                o = 2;
-            }
-
-        }
-        if(collision == paddle3){
-            if (o == 3){
-                remove(paddle3);
-                paddle3 = null;
-                o = 0;
-            }
-            if (o == 2){
-                remove(paddle3);
-                paddle3 = null;
-                o = 1;
-            }
-            if (o == 0){
-                remove(paddle3);
-                paddle3 = null;
-                o = 3;
-            }
-            if (o == 1){
-                remove(paddle3);
-                paddle3 = null;
-                o = 2;
-            }
-        }
-    }
-    public void paddleMove(MouseEvent e){
-        paddle.move(e.getX(),0);
-    }
+        }    }
     public void checkForWinner(){
-        if (game == false && paddle ==null && paddle2 == null && paddle3 == null){
-            label = new GLabel("You win");
+        if (!game && paddle ==null && paddle2 == null && paddle3 == null && life !=0){
+            GLabel label = new GLabel("You win");
             label.setFont("Bahnshift-18");
             add(label,100,100);
         }
         else if ((paddle !=null || paddle2 != null || paddle3 != null) && life == 0){
-            label1 = new GLabel("You lose");
+            GLabel label1 = new GLabel("You lose");
             label1.setFont("Bahnshift-18");
             add(label1,100,100);
         }
     }
+    public void checkPaddle(){
+        if (ball.getY()>paddle4.getY()){
+            life -= 1;
+            if (life == 0){
+                game = false;
+                remove(ball);
+            }
+            else {
+                remove(ball);
+
+                add(ball,0,0);}
+        }
+    }
     public void run() {
         setupTheGame();
+        addMouseListeners();
         while(game){
         ballMove();
-        hitThePaddle();
-        checkForWinner();
-
+        hitTheRocket();
+        checkPaddle();
+//        hitThePaddle();
+//        checkForWinner();
+        label2 = new GLabel("Current life"+life);
+        label2.setFont("Calibri-18");
+        label2.setColor(Color.red);
+        add(label2,50,50);
         pause(PAUSE);
+        remove(label2);
         }
-        addMouseListeners();
+        label2 = new GLabel("Current life"+life);
+        label2.setFont("Calibri-18");
+        label2.setColor(Color.red);
+        add(label2,50,50);
+
 
     }
-//    public void mouseMoved(MouseEvent e){
-//        paddleMove(e);
-//        pause(30);
-//    }
+    public void mouseDragged(MouseEvent e){
+        int x_SPEED = 8;
+        if (e.getX()>paddle4.getX() && paddle4.getX()+PADDLE_WIDTH<=800){
+        paddle4.move(x_SPEED,0);}
+        else if(e.getX()<paddle4.getX() && paddle4.getX()>=0){
+            paddle4.move(-x_SPEED,0);
+        }
+
+
+    }
     private boolean game = true;
     private static int o = 0;
-    private GLabel label;
-    private GLabel label1;
     private GLabel label2;
-    private RandomGenerator r_gen = RandomGenerator.getInstance();
+//    private RandomGenerator r_gen = RandomGenerator.getInstance();
 }
