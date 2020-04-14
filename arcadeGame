@@ -9,6 +9,7 @@
 
 import acm.graphics.*;
 import acm.program.*;
+import acm.util.RandomGenerator;
 //import acm.util.*;
 
 //import java.applet.*;
@@ -56,12 +57,18 @@ public class setup extends GraphicsProgram {
 //    /** Offset of the top brick row from the top */
 //    private static final int BRICK_Y_OFFSET = 70;
     /** Number of turns */
-//    private static final int NTURNS = 3;
-    private GRect paddle;
-    private static int life = 2;
-    private GRect paddle2;
-    private GRect paddle3;
-    private GRect paddle4;
+
+
+    private static int NTURNS = 5;
+    private GRect brick1;
+    private GRect brick2;
+    private GRect brick3;
+    private GRect brick4;
+    private GRect brick5;
+    private GRect brick6;
+    private GRect brick7;
+    private GRect brick8;
+    private GRect rocket;
     private GOval ball;
     /* Method: run() */
     /** Runs the Breakout program. */
@@ -70,10 +77,10 @@ public class setup extends GraphicsProgram {
 //        int width = 100;
 //        int height = 100;
 
-        paddle4 = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
-        paddle4.setFilled(true);
-        paddle4.setColor(Color.blue);
-        add(paddle4,160,500);
+        rocket = new GRect(PADDLE_WIDTH, BRICK_HEIGHT);
+        rocket.setFilled(true);
+        rocket.setColor(Color.blue);
+        add(rocket,160,500);
 
 
         ball = new GOval(BALL_RADIUS, BALL_RADIUS);
@@ -89,7 +96,7 @@ public class setup extends GraphicsProgram {
             if (ball.getX() + BALL_RADIUS <= getWidth() && ball.getY()+BALL_RADIUS <=getHeight()) {
                 ball.move(BALL_SPEED, y_SPEED);
 
-                if (life == 0){
+                if (NTURNS == 0){
                     game = false;
                 }
                 if (ball.getX()+BALL_RADIUS >=getWidth()){
@@ -132,6 +139,40 @@ public class setup extends GraphicsProgram {
                 o = 0;
             }
         }
+    }
+    public void creatingPaddle(){
+        brick1 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick1.setFilled(true);
+        brick1.setColor(Color.red);
+        add(brick1,100,100);
+        brick2 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick2.setFilled(true);
+        brick2.setColor(Color.red);
+        add(brick2,200,100);
+        brick3 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick3.setFilled(true);
+        brick3.setColor(Color.red);
+        add(brick3,300,100);
+        brick4 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick4.setFilled(true);
+        brick4.setColor(Color.red);
+        add(brick4,400,100);
+        brick5 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick5.setFilled(true);
+        brick5.setColor(Color.red);
+        add(brick5,500,100);
+        brick6 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick6.setFilled(true);
+        brick6.setColor(Color.red);
+        add(brick2,100,200);
+        brick7 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick7.setFilled(true);
+        brick7.setColor(Color.red);
+        add(brick1,200,200);
+        brick8 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
+        brick8.setFilled(true);
+        brick8.setColor(Color.red);
+        add(brick8,300,200);
     }
 //    public void hitThePaddle(){
 //        GObject collision = getElementAt(ball.getX(),ball.getY());
@@ -205,9 +246,212 @@ public class setup extends GraphicsProgram {
 //            }
 //        }
 //    }
+    public void headShot(){
+
+    }
+    public void hitTheBrick(){
+        GObject collision = getElementAt(ball.getX(),ball.getY());
+        if (collision == brick1){
+            if (o == 2){
+            remove(brick1);
+
+            o = 1;
+            }
+            if(o == 3){
+                remove(brick1);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick1);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick1);
+
+                o = 2;
+            }
+        }
+
+        if (collision == brick2){
+            if (o == 2){
+                remove(brick2);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick2);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick2);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick2);
+
+                o = 2;
+            }
+        }
+        if (collision == brick3){
+            if (o == 2){
+                remove(brick3);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick3);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick3);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick3);
+
+                o = 2;
+            }
+        }
+
+        if (collision == brick4){
+            if (o == 2){
+                remove(brick4);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick4);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick4);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick4);
+
+                o = 2;
+            }
+        }
+        if (collision == brick5){
+            if (o == 2){
+                remove(brick5);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick5);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick5);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick5);
+
+                o = 2;
+            }
+        }
+
+        if (collision == brick6){
+            if (o == 2){
+                remove(brick6);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick6);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick6);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick6);
+
+                o = 2;
+            }
+        }
+        if (collision == brick7){
+            if (o == 2){
+                remove(brick7);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick7);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick7);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick7);
+
+                o = 2;
+            }
+        }
+
+        if (collision == brick8){
+            if (o == 2){
+                remove(brick8);
+
+                o = 1;
+            }
+            if(o == 3){
+                remove(brick8);
+
+                o = 0;
+            }
+
+
+            if (o == 0){
+                remove(brick8);
+
+                o = 3;
+            }
+            if (o == 1){
+                remove(brick8);
+
+                o = 2;
+            }
+        }
+    }
+
     public void hitTheRocket(){
         GObject collision = getElementAt(ball.getX(),ball.getY());
-        if (collision == paddle4){
+        if (collision == rocket){
             if (o == 0){
                 o = 3;
             }
@@ -216,48 +460,51 @@ public class setup extends GraphicsProgram {
             }
 
         }    }
-    public void checkForWinner(){
-        if (!game && paddle ==null && paddle2 == null && paddle3 == null && life !=0){
-            GLabel label = new GLabel("You win");
-            label.setFont("Bahnshift-18");
-            add(label,100,100);
-        }
-        else if ((paddle !=null || paddle2 != null || paddle3 != null) && life == 0){
-            GLabel label1 = new GLabel("You lose");
-            label1.setFont("Bahnshift-18");
-            add(label1,100,100);
-        }
-    }
-    public void checkPaddle(){
-        if (ball.getY()>paddle4.getY()){
-            life -= 1;
-            if (life == 0){
+//    public void checkForWinner(){
+//        if (!game && paddle ==null && brick1 == null && paddle3 == null && life !=0){
+//            GLabel label = new GLabel("You win");
+//            label.setFont("Bahnshift-18");
+//            add(label,100,100);
+//        }
+//        else if ((paddle !=null || brick1 != null || paddle3 != null) && life == 0){
+//            GLabel label1 = new GLabel("You lose");
+//            label1.setFont("Bahnshift-18");
+//            add(label1,100,100);
+//        }
+//    }
+    public void checkTheRocket(){
+        if (ball.getY()> rocket.getY()){
+            NTURNS -= 1;
+            if (NTURNS == 0){
                 game = false;
                 remove(ball);
             }
             else {
                 remove(ball);
-
-                add(ball,0,0);}
+                int random = r_gen.nextInt(0,1);
+                o = random;
+                add(ball,getWidth()/2,getHeight()/2);}
         }
     }
     public void run() {
         setupTheGame();
+        creatingPaddle();
         addMouseListeners();
         while(game){
         ballMove();
+        hitTheBrick();
         hitTheRocket();
-        checkPaddle();
+        checkTheRocket();
 //        hitThePaddle();
 //        checkForWinner();
-        label2 = new GLabel("Current life"+life);
+        label2 = new GLabel("Current life"+ NTURNS);
         label2.setFont("Calibri-18");
         label2.setColor(Color.red);
         add(label2,50,50);
         pause(PAUSE);
         remove(label2);
         }
-        label2 = new GLabel("Current life"+life);
+        label2 = new GLabel("Current turns: "+ NTURNS);
         label2.setFont("Calibri-18");
         label2.setColor(Color.red);
         add(label2,50,50);
@@ -266,10 +513,10 @@ public class setup extends GraphicsProgram {
     }
     public void mouseDragged(MouseEvent e){
         int x_SPEED = 8;
-        if (e.getX()>paddle4.getX() && paddle4.getX()+PADDLE_WIDTH<=800){
-        paddle4.move(x_SPEED,0);}
-        else if(e.getX()<paddle4.getX() && paddle4.getX()>=0){
-            paddle4.move(-x_SPEED,0);
+        if (e.getX()> rocket.getX() && rocket.getX()+PADDLE_WIDTH<=800){
+        rocket.move(x_SPEED,0);}
+        else if(e.getX()< rocket.getX() && rocket.getX()>=0){
+            rocket.move(-x_SPEED,0);
         }
 
 
@@ -277,5 +524,5 @@ public class setup extends GraphicsProgram {
     private boolean game = true;
     private static int o = 0;
     private GLabel label2;
-//    private RandomGenerator r_gen = RandomGenerator.getInstance();
+    private RandomGenerator r_gen = RandomGenerator.getInstance();
 }
