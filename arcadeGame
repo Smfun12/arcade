@@ -29,7 +29,7 @@ public class setup extends GraphicsProgram {
 
     /** Dimensions of the paddle */
     private static final int PADDLE_WIDTH = 60;
-//    private static final int PADDLE_HEIGHT = 10;
+    private static final int PADDLE_HEIGHT = 10;
 
 //    /** Offset of the paddle up from the bottom */
 //    private static final int PADDLE_Y_OFFSET = 30;
@@ -38,7 +38,7 @@ public class setup extends GraphicsProgram {
     private static final int NBRICKS_PER_ROW = 10;
 
 //    /** Number of rows of bricks */
-//    private static final int NBRICK_ROWS = 10;
+    private static final int NBRICK_ROWS = 10;
 
     /** Separation between bricks */
     private static final int BRICK_SEP = 4;
@@ -59,15 +59,9 @@ public class setup extends GraphicsProgram {
     /** Number of turns */
 
 
-    private static int NTURNS = 5;
+    private static int NTURNS = 3;
     private GRect brick1;
-    private GRect brick2;
-    private GRect brick3;
-    private GRect brick4;
-    private GRect brick5;
-    private GRect brick6;
-    private GRect brick7;
-    private GRect brick8;
+
     private GRect rocket;
     private GOval ball;
     /* Method: run() */
@@ -77,7 +71,7 @@ public class setup extends GraphicsProgram {
 //        int width = 100;
 //        int height = 100;
 
-        rocket = new GRect(PADDLE_WIDTH, BRICK_HEIGHT);
+        rocket = new GRect(PADDLE_WIDTH, PADDLE_HEIGHT);
         rocket.setFilled(true);
         rocket.setColor(Color.blue);
         add(rocket,160,500);
@@ -98,6 +92,7 @@ public class setup extends GraphicsProgram {
 
                 if (NTURNS == 0){
                     game = false;
+
                 }
                 if (ball.getX()+BALL_RADIUS >=getWidth()){
                 o = 1;}
@@ -141,313 +136,47 @@ public class setup extends GraphicsProgram {
         }
     }
     public void creatingPaddle(){
+        int width = 100;
+        int height = 100;
+        for (int i = 0; i<=NBRICK_ROWS;i++){
+            for(int j = 0; j<=NBRICKS_PER_ROW;j++){
         brick1 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
         brick1.setFilled(true);
         brick1.setColor(Color.red);
-        add(brick1,100,100);
-        brick2 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick2.setFilled(true);
-        brick2.setColor(Color.red);
-        add(brick2,200,100);
-        brick3 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick3.setFilled(true);
-        brick3.setColor(Color.red);
-        add(brick3,300,100);
-        brick4 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick4.setFilled(true);
-        brick4.setColor(Color.red);
-        add(brick4,400,100);
-        brick5 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick5.setFilled(true);
-        brick5.setColor(Color.red);
-        add(brick5,500,100);
-        brick6 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick6.setFilled(true);
-        brick6.setColor(Color.red);
-        add(brick2,100,200);
-        brick7 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick7.setFilled(true);
-        brick7.setColor(Color.red);
-        add(brick1,200,200);
-        brick8 = new GRect(BRICK_WIDTH,BRICK_HEIGHT);
-        brick8.setFilled(true);
-        brick8.setColor(Color.red);
-        add(brick8,300,200);
+        add(brick1,width+BRICK_WIDTH+BRICK_SEP,height);
+        width+= 40;
+
+            }
+            width = 100;
+            height += 10;
+        }
+
     }
-//    public void hitThePaddle(){
-//        GObject collision = getElementAt(ball.getX(),ball.getY());
-//        if(collision == paddle){
-//            if (o == 3){
-//            remove(paddle);
-//            paddle = null;
-//            o = 0;
-//            }
-//            if (o == 2){
-//                remove(paddle);
-//                paddle = null;
-//                o = 1;
-//            }
+
+
+//    public void hitTheBrick() {
+//        GObject collision = getElementAt(ball.getX(), ball.getY());
+//        if (collision == rocket){
+//
 //            if (o == 0){
-//                remove(paddle);
-//                paddle = null;
+//                remove(brick1);
 //                o = 3;
 //            }
 //            if (o == 1){
-//                remove(paddle);
-//                paddle = null;
+//                remove(brick1);
 //                o = 2;
 //            }
-//
-//        }
-//        if(collision == paddle2){
-//
-//            if (o == 3){
-//                remove(paddle2);
-//                paddle2 = null;
+//            if(o==3){
+//                remove(brick1);
 //                o = 0;
 //            }
-//            if (o == 2){
-//                remove(paddle2);
-//                paddle2 = null;
+//            if(o == 2){
+//                remove(brick1);
 //                o = 1;
 //            }
-//            if (o == 0){
-//                remove(paddle2);
-//                paddle2 = null;
-//                o = 3;
-//            }
-//            if (o == 1){
-//                remove(paddle2);
-//                paddle2 = null;
-//                o = 2;
-//            }
+//        }
 //
 //        }
-//        if(collision == paddle3){
-//            if (o == 3){
-//                remove(paddle3);
-//                paddle3 = null;
-//                o = 0;
-//            }
-//            if (o == 2){
-//                remove(paddle3);
-//                paddle3 = null;
-//                o = 1;
-//            }
-//            if (o == 0){
-//                remove(paddle3);
-//                paddle3 = null;
-//                o = 3;
-//            }
-//            if (o == 1){
-//                remove(paddle3);
-//                paddle3 = null;
-//                o = 2;
-//            }
-//        }
-//    }
-    public void headShot(){
-
-    }
-    public void hitTheBrick(){
-        GObject collision = getElementAt(ball.getX(),ball.getY());
-        if (collision == brick1){
-            if (o == 2){
-            remove(brick1);
-
-            o = 1;
-            }
-            if(o == 3){
-                remove(brick1);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick1);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick1);
-
-                o = 2;
-            }
-        }
-
-        if (collision == brick2){
-            if (o == 2){
-                remove(brick2);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick2);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick2);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick2);
-
-                o = 2;
-            }
-        }
-        if (collision == brick3){
-            if (o == 2){
-                remove(brick3);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick3);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick3);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick3);
-
-                o = 2;
-            }
-        }
-
-        if (collision == brick4){
-            if (o == 2){
-                remove(brick4);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick4);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick4);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick4);
-
-                o = 2;
-            }
-        }
-        if (collision == brick5){
-            if (o == 2){
-                remove(brick5);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick5);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick5);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick5);
-
-                o = 2;
-            }
-        }
-
-        if (collision == brick6){
-            if (o == 2){
-                remove(brick6);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick6);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick6);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick6);
-
-                o = 2;
-            }
-        }
-        if (collision == brick7){
-            if (o == 2){
-                remove(brick7);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick7);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick7);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick7);
-
-                o = 2;
-            }
-        }
-
-        if (collision == brick8){
-            if (o == 2){
-                remove(brick8);
-
-                o = 1;
-            }
-            if(o == 3){
-                remove(brick8);
-
-                o = 0;
-            }
-
-
-            if (o == 0){
-                remove(brick8);
-
-                o = 3;
-            }
-            if (o == 1){
-                remove(brick8);
-
-                o = 2;
-            }
-        }
-    }
 
     public void hitTheRocket(){
         GObject collision = getElementAt(ball.getX(),ball.getY());
@@ -483,16 +212,17 @@ public class setup extends GraphicsProgram {
                 remove(ball);
                 int random = r_gen.nextInt(0,1);
                 o = random;
-                add(ball,getWidth()/2,getHeight()/2);}
+                add(ball,getWidth()/2.0,getHeight()/2.0);}
         }
     }
     public void run() {
         setupTheGame();
         creatingPaddle();
         addMouseListeners();
+        GLabel label2;
         while(game){
         ballMove();
-        hitTheBrick();
+//        hitTheBrick();
         hitTheRocket();
         checkTheRocket();
 //        hitThePaddle();
@@ -504,18 +234,23 @@ public class setup extends GraphicsProgram {
         pause(PAUSE);
         remove(label2);
         }
-        label2 = new GLabel("Current turns: "+ NTURNS);
-        label2.setFont("Calibri-18");
-        label2.setColor(Color.red);
-        add(label2,50,50);
+        removeAll();
 
+
+        GImage lose = new GImage("lose.gif");
+        lose.scale(1.7,3);
+        add(lose);
+        label2 = new GLabel("You lost");
+        label2.setFont("Calibri-36");
+        label2.setColor(Color.blue);
+        add(label2,getWidth()/2.0-25,50);
 
     }
     public void mouseDragged(MouseEvent e){
         int x_SPEED = 8;
-        if (e.getX()> rocket.getX() && rocket.getX()+PADDLE_WIDTH<=800){
+        while (e.getX()> rocket.getX() && rocket.getX()+PADDLE_WIDTH<=800){
         rocket.move(x_SPEED,0);}
-        else if(e.getX()< rocket.getX() && rocket.getX()>=0){
+        while(e.getX()< rocket.getX() && rocket.getX()>=0){
             rocket.move(-x_SPEED,0);
         }
 
@@ -523,6 +258,5 @@ public class setup extends GraphicsProgram {
     }
     private boolean game = true;
     private static int o = 0;
-    private GLabel label2;
     private RandomGenerator r_gen = RandomGenerator.getInstance();
 }
