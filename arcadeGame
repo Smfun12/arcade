@@ -207,8 +207,8 @@ public class setup extends GraphicsProgram {
 				remove(ball);
 			} else {
 				remove(ball);
-				int random = r_gen.nextInt(0, 1);
-				o = random;
+				int random = r_gen.nextInt(1, 3);
+				vx = random;
 				add(ball, getWidth() / 2.0, getHeight() / 2.0);
 			}
 		}
