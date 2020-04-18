@@ -115,7 +115,8 @@ public class setup extends GraphicsProgram {
 		ball.setFilled(true);
 		ball.setColor(Color.black);
 		add(ball, getWidth() / 2.0, getHeight() / 2.0);
-		vx = 1.5;
+		vx = r_gen.nextDouble(1.0, 3.0); 
+		if (r_gen.nextBoolean(0.5)) vx = -vx;
 		vy = 3;
 	}
 
