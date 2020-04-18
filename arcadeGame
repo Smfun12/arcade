@@ -10,22 +10,21 @@
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.RandomGenerator;
-//import acm.util.*;
+import acm.util.*;
 
-//import java.applet.*;
+import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
-//import java.math.BigDecimal;
 
 public class setup extends GraphicsProgram {
 	// Hello
 	/** Width and height of application window in pixels */
 	public static final int APPLICATION_WIDTH = 400;
-    public static final int APPLICATION_HEIGHT = 600;
+	public static final int APPLICATION_HEIGHT = 600;
 
 	/** Dimensions of game board (usually the same) */
 	private static final int WIDTH = APPLICATION_WIDTH;
-    private static final int HEIGHT = APPLICATION_HEIGHT;
+	private static final int HEIGHT = APPLICATION_HEIGHT;
 
 	/** Dimensions of the paddle */
 	private static final int PADDLE_WIDTH = 60;
@@ -83,8 +82,8 @@ public class setup extends GraphicsProgram {
 			label2.setFont("Calibri-18");
 			label2.setColor(Color.red);
 			add(label2, 50, 50);
-			
-			label1 = new GLabel("Points: " + 3*countBricks);
+
+			label1 = new GLabel("Points: " + 3 * countBricks);
 			label1.setFont("Calibri-18");
 			label1.setColor(Color.red);
 			add(label1, 250, 50);
@@ -103,9 +102,9 @@ public class setup extends GraphicsProgram {
 		add(label2, getWidth() / 2.0 - 25, 50);
 
 	}
-	
+
 	public void setupTheGame() {
-		this.setSize(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+		this.setSize(APPLICATION_WIDTH - BRICK_SEP, APPLICATION_HEIGHT);
 
 		rocket = new GRect(PADDLE_WIDTH, PADDLE_HEIGHT);
 		rocket.setFilled(true);
@@ -119,7 +118,7 @@ public class setup extends GraphicsProgram {
 		vx = 1.5;
 		vy = 2;
 	}
-	
+
 	private void checkCollision() {
 		if (ball.getX() >= 0 && ball.getY() + BALL_RADIUS <= getHeight())
 			vy *= -1;
@@ -140,11 +139,24 @@ public class setup extends GraphicsProgram {
 			for (int j = 0; j < NBRICKS_PER_ROW; j++) {
 				GRect brick = new GRect(BRICK_WIDTH, BRICK_HEIGHT);
 				brick.setFilled(true);
-				brick.setColor(Color.RED);
+				brick.setColor(Color(i));
 				add(brick, width, height);
 				width += BRICK_WIDTH + BRICK_SEP;
 			}
 		}
+	}
+
+	private Color Color(int i) {
+		if (i >= 0 && i < 2)
+			return Color.RED;
+		if (i >= 2 && i < 4)
+			return Color.ORANGE;
+		if (i >= 4 && i < 6)
+			return Color.YELLOW;
+		if (i >= 6 && i < 8)
+			return Color.GREEN;
+		else
+		return Color.CYAN;
 	}
 
 	private boolean isItBrick(GObject collision) {
@@ -181,7 +193,10 @@ public class setup extends GraphicsProgram {
 
 	public void hitTheRocket() {
 		GObject collision = getElementAt(ball.getX(), ball.getY() + PADDLE_HEIGHT);
+		GObject collision1 = getElementAt(ball.getX() + BALL_RADIUS, ball.getY() + PADDLE_HEIGHT);
 		if (collision == rocket) {
+			vy *= (-1);
+		} else if (collision1 == rocket) {
 			vy *= (-1);
 		}
 	}
@@ -200,7 +215,7 @@ public class setup extends GraphicsProgram {
 //    }
 
 	public void checkTheRocket() {
-		if (ball.getY() > rocket.getY()) {
+		if (ball.getY() + BALL_RADIUS > APPLICATION_HEIGHT - 1) {
 			NTURNS -= 1;
 			if (NTURNS == 0) {
 				game = false;
