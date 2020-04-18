@@ -116,7 +116,7 @@ public class setup extends GraphicsProgram {
 		ball.setColor(Color.black);
 		add(ball, getWidth() / 2.0, getHeight() / 2.0);
 		vx = 1.5;
-		vy = 2;
+		vy = 3;
 	}
 
 	private void checkCollision() {
@@ -215,7 +215,7 @@ public class setup extends GraphicsProgram {
 //    }
 
 	public void checkTheRocket() {
-		if (ball.getY() + BALL_RADIUS > APPLICATION_HEIGHT - 1) {
+		if (ball.getY() + BALL_RADIUS > APPLICATION_HEIGHT - vy) {
 			NTURNS -= 1;
 			if (NTURNS == 0) {
 				game = false;
