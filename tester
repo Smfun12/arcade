@@ -18,43 +18,61 @@ import java.awt.event.*;
 
 public class tester extends GraphicsProgram {
     // Hello
-    /** Width and height of application window in pixels */
+    /**
+     * Width and height of application window in pixels
+     */
     public static final int APPLICATION_WIDTH = 400;
     public static final int APPLICATION_HEIGHT = 600;
 
-    /** Dimensions of game board (usually the same) */
+    /**
+     * Dimensions of game board (usually the same)
+     */
     private static final int WIDTH = APPLICATION_WIDTH;
     private static final int HEIGHT = APPLICATION_HEIGHT;
 
-    /** Dimensions of the paddle */
+    /**
+     * Dimensions of the paddle
+     */
     private static final int PADDLE_WIDTH = 60;
     private static final int PADDLE_HEIGHT = 10;
 
 //    /** Offset of the paddle up from the bottom */
 //    private static final int PADDLE_Y_OFFSET = 30;
 
-    /** Number of bricks per row */
+    /**
+     * Number of bricks per row
+     */
     private static final int NBRICKS_PER_ROW = 10;
 
     //    /** Number of rows of bricks */
     private static final int NBRICK_ROWS = 10;
 
-    /** Separation between bricks */
+    /**
+     * Separation between bricks
+     */
     private static final int BRICK_SEP = 4;
 
-    /** Width of a brick */
+    /**
+     * Width of a brick
+     */
     private static final int BRICK_WIDTH = (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW;
 
-    /** Height of a brick */
+    /**
+     * Height of a brick
+     */
     private static final int BRICK_HEIGHT = 8;
 
-    /** Radius of the ball in pixels */
+    /**
+     * Radius of the ball in pixels
+     */
     private static final int BALL_RADIUS = 10;
     private static final int PAUSE = 5;
 
     //    /** Offset of the top brick row from the top */
     private static final int BRICK_Y_OFFSET = 70;
-    /** Number of turns */
+    /**
+     * Number of turns
+     */
     private static int time = 3;
     private static int NTURNS = 3;
     private int countBricks;
@@ -64,12 +82,17 @@ public class tester extends GraphicsProgram {
     private static final int DELAY = 5000;
     private GLabel cred;
     /* Method: run() */
-    /** Runs the Breakout program. */
+
+    /**
+     * Runs the Breakout program.
+     */
     public void run() {
-        addKeyListeners();
-        addMouseListeners();
+
         this.setSize(APPLICATION_WIDTH + 100, APPLICATION_HEIGHT);
+        addMouseListeners();
+        addKeyListeners();
         menu();
+
 
         setupTheGame();
         creatingPaddle();
@@ -104,39 +127,43 @@ public class tester extends GraphicsProgram {
 
 
     }
-
+    private GLabel label3;
     private void checkForWinner() {
         GLabel label2;
-        if (countBricks == 100){
+        if (countBricks == 100) {
 
             game = false;
             GImage win = new GImage("win.gif");
             win.scale(0.5, 0.9);
             add(win);
-            label2 = new GLabel("You win, total points: " + 300);
+            label2 = new GLabel("You win.Total points: " + 300);
             label2.setFont("Ancient Modern Tales-26");
             label2.setColor(Color.blue);
             add(label2, getWidth() / 2.0 - 75, 50);
             pause(DELAY);
             removeAll();
             GImage image = new GImage("bluemoon.png");
-            image.scale(0.3,0.6);
+            image.scale(0.3, 0.6);
             add(image);
-            while(time >0){
-                beginning = new GLabel("Congratulation! Next level with ");
-                beginning.setFont("Ancient Modern Tales-26");
+            while (time > 0) {
+                beginning = new GLabel("Congratulation! ");
+                beginning.setFont("Ancient Modern Tales-36");
                 beginning.setColor(Color.red);
-                add(beginning, getWidth()/2.0-175, getHeight()/2.0);
-                label2 = new GLabel("extra ball speed in: "+  time);
-                label2.setFont("Ancient Modern Tales-26");
+                add(beginning, getWidth() / 2.0 - 100, getHeight() / 2.0-100);
+                label2 = new GLabel("Next level with");
+                label2.setFont("Ancient Modern Tales-36");
                 label2.setColor(Color.red);
-                add(label2, getWidth() / 2.0 - 175, getHeight()/2.0+30);
-                time-=1;
+                add(label2, getWidth() / 2.0 - 100, getHeight() / 2.0 -50);
+                label3 = new GLabel("extra ball speed in: " + time);
+                label3.setFont("Ancient Modern Tales-36");
+                label3.setColor(Color.red);
+                add(label3, getWidth() / 2.0 - 100, getHeight() / 2.0 );
+                time -= 1;
                 pause(1000);
-                remove(label2);
+                remove(label3);
             }
             removeAll();
-            this.setSize(APPLICATION_WIDTH+100,APPLICATION_HEIGHT);
+            this.setSize(APPLICATION_WIDTH + 100, APPLICATION_HEIGHT);
             menu = true;
             menu();
             ball = null;
@@ -148,18 +175,19 @@ public class tester extends GraphicsProgram {
             creatingPaddle();
 
         }
-        if (countBricks<300 && NTURNS == 0){
-
+        if (countBricks < 300 && NTURNS == 0) {
+            removeAll();
+            this.setSize(800,600);
             GImage lose = new GImage("lose.gif");
-            lose.scale(0.9, 2);
+            lose.scale(1.8, 2);
             add(lose);
             label2 = new GLabel("You lost, total points: " + 3 * countBricks);
-            label2.setFont("Ancient Modern Tales-20");
-            label2.setColor(Color.blue);
+            label2.setFont("Ancient Modern Tales-36");
+            label2.setColor(Color.red);
             add(label2, getWidth() / 2.0 - 75, 50);
             menu = true;
             pause(DELAY);
-            this.setSize(APPLICATION_WIDTH+100,APPLICATION_HEIGHT);
+            this.setSize(APPLICATION_WIDTH + 100, APPLICATION_HEIGHT);
             menu();
             removeAll();
             ball = null;
@@ -168,34 +196,48 @@ public class tester extends GraphicsProgram {
 
         }
     }
-    public void credits(){
-        GLabel beginning1 = new GLabel("This game was created by DrImmiracle and Smfun12.");
-        beginning1.setFont("Ancient Modern Tales-20");
+    private static final int Y_SPEED = 8;
+    public void credits() {
+        GLabel beginning1 = new GLabel("This game was created");
+        beginning1.setFont("Ancient Modern Tales-36");
         beginning1.setColor(Color.red);
-        add(beginning1, 0, 80);
+        add(beginning1, getWidth() / 2.0 - 100, getHeight());
+        GLabel beginning2 = new GLabel("by DrImmiracle and Smfun12.");
+        beginning2.setFont("Ancient Modern Tales-30");
+        beginning2.setColor(Color.red);
+        add(beginning2, getWidth() / 2.0 - 100, getHeight()+ 30);
         GLabel beginning3 = new GLabel("We hope you'll enjoy it.");
-        beginning3.setFont("Ancient Modern Tales-26");
+        beginning3.setFont("Ancient Modern Tales-36");
         beginning3.setColor(Color.red);
-        add(beginning3, 0, 120);
-        int y_SPEED = 8;
-        while (credits){
-            beginning1.sendToFront();
-            beginning3.sendToFront();
+        add(beginning3, getWidth() / 2.0 - 100, getHeight() + 90);
 
-            beginning1.move(0,y_SPEED);
-            if (beginning1.getY()>=getHeight()){
-                beginning1.setLocation(0,0);
+        while (credits) {
+            beginning1.sendToFront();
+            beginning2.sendToFront();
+            beginning3.sendToFront();
+            beginning1.move(0, -Y_SPEED);
+            if (beginning1.getY() <= 0) {
+                beginning1.setLocation(getWidth() / 2.0 - 100, getHeight());
+
+            }beginning2.move(0,-Y_SPEED);
+            if (beginning2.getY() <= 0) {
+                beginning2.setLocation(getWidth() / 2.0 - 100, getHeight());
+
             }
-            beginning3.move(0,y_SPEED);
-            if (beginning3.getY()>=getHeight()){
-                beginning3.setLocation(0,20);
+            beginning3.move(0, -Y_SPEED);
+            if (beginning3.getY() <= 0) {
+                beginning3.setLocation(getWidth() / 2.0 - 100, getHeight());
+
             }
+
             pause(50);
-            y_SPEED = 8;
+
         }
+
 
     }
         public void menu(){
+
         GImage back = new GImage("back.png");
         back.scale(1, 1);
         add(back);
@@ -213,32 +255,33 @@ public class tester extends GraphicsProgram {
         beginning2.setFont("Ancient Modern Tales-26");
         beginning2.setColor(Color.RED);
         add(beginning2, getWidth()/2.0-100, 170);
-        while (menu) {
-
-            beginning.sendToFront();
-            beginning2.sendToFront();
-            beginning4.sendToFront();
             playGame = new GRect(175, 100);
-            playGame.setFilled(false);
-            playGame.setColor(Color.red);
-            add(playGame, getWidth() / 2.0 - 75, getHeight() / 2.0 - 75);
+            playGame.setFilled(true);
+            playGame.setColor(Color.gray);
+
             credit = new GRect(175,100);
-            credit.setFilled(false);
-            credit.setColor(Color.red);
-            add(credit,getWidth()/2.0-75, getHeight()/2.0+25);
+            credit.setFilled(true);
+            credit.setColor(Color.gray);
+
             start = new GLabel("Play");
             start.setFont("Ancient Modern Tales-26");
-            start.setColor(Color.red);
+            start.setColor(Color.black);
             add(start, getWidth() / 2.0 - 20, getHeight() / 2.0 - 20);
-
             cred = new GLabel("Credits");
             cred.setFont("Ancient Modern Tales-26");
-            cred.setColor(Color.red);
+
+            cred.setColor(Color.black);
             add(cred,getWidth()/2.0-20,getHeight()/2.0+75);
+        while (menu) {
+
+            add(playGame, getWidth() / 2.0 - 75, getHeight() / 2.0 - 75);
+            start.sendToFront();
+            add(credit,getWidth()/2.0-75, getHeight()/2.0+26);
+            cred.sendToFront();
             if (credits){
                 credits();
             }
-            
+
         }
 
     }
@@ -450,6 +493,23 @@ public class tester extends GraphicsProgram {
             beginning2.setFont("Ancient Modern Tales-26");
             beginning2.setColor(Color.RED);
             add(beginning2, getWidth()/2.0-100, 170);
+            playGame = new GRect(175, 100);
+            playGame.setFilled(true);
+            playGame.setColor(Color.gray);
+
+            credit = new GRect(175,100);
+            credit.setFilled(true);
+            credit.setColor(Color.gray);
+
+            start = new GLabel("Play");
+            start.setFont("Ancient Modern Tales-26");
+            start.setColor(Color.black);
+            add(start, getWidth() / 2.0 - 20, getHeight() / 2.0 - 20);
+            cred = new GLabel("Credits");
+            cred.setFont("Ancient Modern Tales-26");
+
+            cred.setColor(Color.black);
+            add(cred,getWidth()/2.0-20,getHeight()/2.0+75);
 
         }
         }
@@ -466,6 +526,25 @@ public class tester extends GraphicsProgram {
             while (e.getX() < rocket.getX() && rocket.getX() >= 0) {
                 rocket.move(-x_SPEED, 0);
             }
+        }
+        if (menu && !game && !credits){
+            if (e.getX()>=playGame.getX() && e.getX()<=playGame.getX()+175 && e.getY()>=playGame.getY() && e.getY()<=playGame.getY()+100){
+
+                playGame.setColor(Color.lightGray);
+            }
+            else{
+
+                playGame.setColor(Color.gray);
+            }
+            if (e.getX()>=credit.getX() && e.getX()<=credit.getX()+175 && e.getY()>=credit.getY() && e.getY()<=credit.getY()+100){
+
+                credit.setColor(Color.lightGray);
+            }
+            else{
+
+                credit.setColor(Color.gray);
+            }
+
         }
 
     }
