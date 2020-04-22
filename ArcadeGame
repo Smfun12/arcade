@@ -204,6 +204,7 @@ public class ArcadeGame extends GraphicsProgram {
             SoundClip lost = new SoundClip("lost.wav");
             lost.setVolume(0.35);
             lost.play();
+            game1 = new SoundClip("end.wav");
             menu = true;
             ball = null;
             N_TURNS = lives;
@@ -645,3 +646,4 @@ public class ArcadeGame extends GraphicsProgram {
     private boolean credits = false;
     private RandomGenerator r_gen = RandomGenerator.getInstance();
 }
+
