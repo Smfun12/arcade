@@ -10,6 +10,7 @@
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.RandomGenerator;
+import acm.util.SoundClip;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +27,7 @@ public class ArcadeGame extends GraphicsProgram {
      * Dimensions of game board (usually the same)
      */
     private static final int WIDTH = APPLICATION_WIDTH;
-    private static final int HEIGHT = APPLICATION_HEIGHT;
+//    private static final int HEIGHT = APPLICATION_HEIGHT;
 
     /**
      * Dimensions of the paddle
@@ -66,13 +67,14 @@ public class ArcadeGame extends GraphicsProgram {
     private static final int BALL_RADIUS = 10;
     private static final int PAUSE = 5;
 
-        /** Offset of the top brick row from the top */
+    /** Offset of the top brick row from the top */
     private static final int BRICK_Y_OFFSET = 70;
     /**
      * Number of turns
      */
     private static int time = 3;
-    private static int NTURNS = 3;
+    private static int N_TURNS = 2;
+    private int lives = N_TURNS;
     private int countBricks;
     private static int counter = 3;
     private double vx, vy;
@@ -90,24 +92,21 @@ public class ArcadeGame extends GraphicsProgram {
         this.setSize(APPLICATION_WIDTH + 100, APPLICATION_HEIGHT);
         addKeyListeners();
         menu();
-
-
         setupTheGame();
         creatingPaddle();
-
         GLabel label1;
         GLabel label2;
         while (game) {
             if (ball != null) {
                 ball.move(vx, vy);
             }
-//            movePowerUp();
+            movePowerUp();
             checkCollision();
             hitTheBrick();
             hitTheRocket();
 //        hitThePaddle();
             checkForWinner();
-            label2 = new GLabel("Current life: " + NTURNS);
+            label2 = new GLabel("Current life: " + N_TURNS);
             label2.setFont("Ancient Modern Tales-26");
             label2.setColor(Color.red);
             add(label2, 50, 50);
@@ -125,12 +124,9 @@ public class ArcadeGame extends GraphicsProgram {
 
     }
 
-    private GLabel label3;
-
     private void checkForWinner() {
         GLabel label2;
-        if (countBricks == 100) {
-
+        if (countBricks >= 100) {
             game = false;
             counter++;
             GImage win = new GImage("win.gif");
@@ -154,7 +150,7 @@ public class ArcadeGame extends GraphicsProgram {
                 label2.setFont("Ancient Modern Tales-36");
                 label2.setColor(Color.red);
                 add(label2, getWidth() / 2.0 - 100, getHeight() / 2.0 - 25);
-                label3 = new GLabel("extra ball speed in: " + time);
+                GLabel label3 = new GLabel("extra ball speed in: " + time);
                 label3.setFont("Ancient Modern Tales-36");
                 label3.setColor(Color.red);
                 add(label3, getWidth() / 2.0 - 100, getHeight() / 2.0 + 25);
@@ -165,6 +161,7 @@ public class ArcadeGame extends GraphicsProgram {
             removeAll();
             this.setSize(APPLICATION_WIDTH + 100, APPLICATION_HEIGHT);
             menu = true;
+            ball = null;
             menu();
             ball = null;
             time = 3;
@@ -173,6 +170,7 @@ public class ArcadeGame extends GraphicsProgram {
             GImage back = new GImage("back.png");
             back.scale(1, 1);
             add(back);
+            ball = null;
             rocket = new GRect(PADDLE_WIDTH, PADDLE_HEIGHT);
             rocket.setFilled(true);
             rocket.setColor(Color.blue);
@@ -183,14 +181,14 @@ public class ArcadeGame extends GraphicsProgram {
             creatingPaddle();
 
         }
-        if (countBricks < 300 && NTURNS == 0) {
+        if (countBricks < 300 && N_TURNS == 0) {
             removeAll();
             counter = 3;
             this.setSize(875, 600);
             GImage lose = new GImage("lose.gif");
             lose.scale(1.8, 2);
             add(lose);
-            label2 = new GLabel("You lost, total points: " + 3 * countBricks);
+            label2 = new GLabel("You lost. Total points: " + 3 * countBricks);
             label2.setFont("Ancient Modern Tales-36");
             label2.setColor(Color.red);
             add(label2, getWidth() / 2.0 - 125, 50);
@@ -221,11 +219,15 @@ public class ArcadeGame extends GraphicsProgram {
         beginning3.setFont("Ancient Modern Tales-36");
         beginning3.setColor(Color.red);
         add(beginning3, getWidth() / 2.0 - 115, getHeight() + 90);
-
+        GLabel exit = new GLabel("To enter the menu press 'Esc'");
+        exit.setFont("Ancient Modern Tales-18");
+        exit.setColor(Color.red);
+        add(exit,0,20);
         while (credits) {
             beginning1.sendToFront();
             beginning2.sendToFront();
             beginning3.sendToFront();
+            exit.sendToFront();
             beginning1.move(0, -Y_SPEED);
             if (beginning1.getY() <= 0) {
                 beginning1.setLocation(getWidth() / 2.0 - 125, getHeight());
@@ -329,8 +331,8 @@ public class ArcadeGame extends GraphicsProgram {
                 remove(ball);
                 ball = null;
 //            add(ball,getWidth()/2.0, getHeight()/2.0);
-                NTURNS -= 1;
-                if (NTURNS == 0) {
+                N_TURNS -= 1;
+                if (N_TURNS == 0) {
                     game = false;
                 }
             }
@@ -369,18 +371,22 @@ public class ArcadeGame extends GraphicsProgram {
     private boolean isItBrick(GObject collision) {
         if (collision != null) {
             if (collision.getWidth() == BRICK_WIDTH && collision.getHeight() == BRICK_HEIGHT) {
-//                int o = r_gen.nextInt(0,10);
-//                if (o == 0 || o == 5 || o == 10){
-//
-//                rect = new GImage("powerup.png");
-//                rect.scale(0.04,0.04);
-//                add(rect,collision.getX(),collision.getY());
-//                remove(collision);
-//                }
-//                else {
+                int o = r_gen.nextInt(0,5);
+                if (o == 0 || o == 5){
+                    if (rect == null){
+                rect = new GImage("powerup.png");
+                rect.scale(0.04,0.04);
+                add(rect,collision.getX(),collision.getY());}
                 remove(collision);
-//                }
-                countBricks ++;
+                    SoundClip clip = new SoundClip("bounce.au");
+                    clip.setVolume(1);
+                    clip.play();
+                }
+                remove(collision);
+                SoundClip clip = new SoundClip("bounce.au");
+                clip.setVolume(1);
+                clip.play();
+                countBricks++;
                 vy *= (-1);
                 return true;
             }
@@ -388,37 +394,45 @@ public class ArcadeGame extends GraphicsProgram {
         return false;
     }
 
-    public boolean hitTheBrick() {
+    public void hitTheBrick() {
         if (ball != null) {
             GObject collision;
             collision = getElementAt(ball.getX() + BALL_RADIUS / 2.0, ball.getY());
             if (isItBrick(collision))
-                return true;
+                return;
             collision = getElementAt(ball.getX(), ball.getY());
             if (isItBrick(collision))
-                return true;
+                return;
             collision = getElementAt(ball.getX(), ball.getY() + BALL_RADIUS);
             if (isItBrick(collision))
-                return true;
+                return;
             collision = getElementAt(ball.getX() + BALL_RADIUS, ball.getY() + BALL_RADIUS);
             if (isItBrick(collision))
-                return true;
+                return;
             collision = getElementAt(ball.getX() + BALL_RADIUS, ball.getY());
-            if (isItBrick(collision))
-                return true;
-            return false;
+            isItBrick(collision);
         }
-        return true;
     }
 
-    //    public void movePowerUp(){
-//        int y_SPEED = 3;
-//        if (rect!=null){
-//            if (rect.getY()+10<=APPLICATION_HEIGHT){
-//                rect.move(0,y_SPEED);
-//            }
-//        }
-//    }
+        public void movePowerUp(){
+        int y_SPEED = 1;
+        if (rect!=null){
+            if (rect.getX()>= rocket.getX()-PADDLE_WIDTH && rect.getX()<=rocket.getX()+PADDLE_WIDTH+60 && rect.getY()+30==rocket.getY()&& rect.getY()-30==rocket.getY()){
+                remove(rect);
+                rect = null;
+                countBricks+=10;
+
+            }
+            if (rect != null){
+            if (rect.getY()+10<=APPLICATION_HEIGHT){
+                rect.move(0,y_SPEED);
+            }else{
+                remove(rect);
+                rect = null;
+            }
+            }
+        }
+    }
     public void hitTheRocket() {
         if (ball != null) {
             GObject collision = getElementAt(ball.getX(), ball.getY());
@@ -454,7 +468,9 @@ public class ArcadeGame extends GraphicsProgram {
     }
 
     public void mouseClicked(MouseEvent e) {
+
         if (game) {
+
             if (ball == null) {
                 ball = new GOval(BALL_RADIUS, BALL_RADIUS);
                 ball.setFilled(true);
@@ -468,7 +484,8 @@ public class ArcadeGame extends GraphicsProgram {
                 removeAll();
                 game = true;
                 ball = null;
-                NTURNS = 3;
+                N_TURNS = lives;
+
             }
         }
         if (!credits && !game) {
@@ -565,6 +582,7 @@ public class ArcadeGame extends GraphicsProgram {
 
     }
 
+    private GImage rect;
     private GRect playGame;
     private GLabel start;
     private GLabel beginning;
