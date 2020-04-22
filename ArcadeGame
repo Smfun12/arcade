@@ -27,7 +27,7 @@ public class ArcadeGame extends GraphicsProgram {
      * Dimensions of game board (usually the same)
      */
     private static final int WIDTH = APPLICATION_WIDTH;
-//    private static final int HEIGHT = APPLICATION_HEIGHT;
+    //    private static final int HEIGHT = APPLICATION_HEIGHT;
     private SoundClip jump;
     /**
      * Dimensions of the paddle
@@ -73,7 +73,7 @@ public class ArcadeGame extends GraphicsProgram {
      * Number of turns
      */
     private static int time = 3;
-    private static int N_TURNS = 3;
+    private static int N_TURNS = 2;
     private int lives = N_TURNS;
     private int countBricks;
     private static int counter = 3;
@@ -100,8 +100,8 @@ public class ArcadeGame extends GraphicsProgram {
         GLabel label2;
         game1 = new SoundClip("end.wav");
         while (game) {
-            game1.setVolume(1);
-            game1.play();
+            game1.setVolume(0.25);
+            game1.loop();
             if (ball != null) {
                 ball.move(vx, vy);
             }
@@ -109,7 +109,6 @@ public class ArcadeGame extends GraphicsProgram {
             checkCollision();
             hitTheBrick();
             hitTheRocket();
-//        hitThePaddle();
             checkForWinner();
             label2 = new GLabel("Current life: " + N_TURNS);
             label2.setFont("Ancient Modern Tales-26");
@@ -133,6 +132,7 @@ public class ArcadeGame extends GraphicsProgram {
         GLabel label2;
         if (countBricks >= 100) {
             game = false;
+            game1.stop();
             counter++;
             GImage win = new GImage("win.gif");
             win.scale(0.5, 0.9);
@@ -142,7 +142,7 @@ public class ArcadeGame extends GraphicsProgram {
             label2.setColor(Color.blue);
             add(label2, getWidth() / 2.0 - 100, 50);
             SoundClip win1 = new SoundClip("win.wav");
-            win1.setVolume(1);
+            win1.setVolume(0.8);
             win1.play();
             pause(DELAY);
             removeAll();
@@ -189,7 +189,7 @@ public class ArcadeGame extends GraphicsProgram {
             creatingPaddle();
 
         }
-        if (countBricks < 300 && N_TURNS == 0) {
+        if (countBricks < 100 && N_TURNS == 0) {
             game1.stop();
             removeAll();
             counter = 3;
@@ -202,7 +202,7 @@ public class ArcadeGame extends GraphicsProgram {
             label2.setColor(Color.red);
             add(label2, getWidth() / 2.0 - 125, 50);
             SoundClip lost = new SoundClip("lost.wav");
-            lost.setVolume(1);
+            lost.setVolume(0.35);
             lost.play();
             menu = true;
             ball = null;
@@ -305,8 +305,8 @@ public class ArcadeGame extends GraphicsProgram {
         add(cred, getWidth() / 2.0 - 15, getHeight() / 2.0 + 85);
         addMouseListeners();
         menu1 = new SoundClip("menu.wav");
-        menu1.setVolume(1);
-        menu1.play();
+        menu1.setVolume(0.3);
+        menu1.loop();
         while (menu) {
 
             add(playGame, getWidth() / 2.0 - 75, getHeight() / 2.0 - 75);
@@ -349,7 +349,7 @@ public class ArcadeGame extends GraphicsProgram {
             if (ball.getY() + BALL_RADIUS > getHeight() - (int) vy) {
                 remove(ball);
                 SoundClip fall = new SoundClip("fall.wav");
-                fall.setVolume(1);
+                fall.setVolume(0.7);
                 fall.play();
                 ball = null;
 //            add(ball,getWidth()/2.0, getHeight()/2.0);
@@ -393,21 +393,21 @@ public class ArcadeGame extends GraphicsProgram {
     private boolean isItBrick(GObject collision) {
         if (collision != null) {
             if (collision.getWidth() == BRICK_WIDTH && collision.getHeight() == BRICK_HEIGHT) {
-                int o = r_gen.nextInt(0,45);
-                if (o == 0 || o == 45){
+                int o = r_gen.nextInt(0,35);
+                if (o == 0 || o == 35){
                     if (rect == null){
-                rect = new GImage("powerup.png");
-                rect.scale(0.04,0.04);
-                add(rect,collision.getX(),collision.getY());}
-                remove(collision);
+                        rect = new GImage("powerup.png");
+                        rect.scale(0.04,0.04);
+                        add(rect,collision.getX(),collision.getY());}
+                    remove(collision);
                     SoundClip collision2 = new SoundClip("collision.wav");
-                    collision2.setVolume(1);
+                    collision2.setVolume(0.4);
                     collision2.play();
 
                 }
                 remove(collision);
                 SoundClip collision2 = new SoundClip("collision.wav");
-                collision2.setVolume(1);
+                collision2.setVolume(0.4);
                 collision2.play();
 
                 countBricks++;
@@ -438,25 +438,25 @@ public class ArcadeGame extends GraphicsProgram {
         }
     }
 
-        public void movePowerUp(){
+    public void movePowerUp(){
         int y_SPEED = 1;
         if (rect!=null){
             if (rect.getX()>= rocket.getX()-PADDLE_WIDTH && rect.getX()<=rocket.getX()+PADDLE_WIDTH+60 && rect.getY()+30==rocket.getY()){
                 remove(rect);
                 powerUp = new SoundClip("powerup.wav");
-                powerUp.setVolume(1);
+                powerUp.setVolume(0.1);
                 powerUp.play();
                 rect = null;
                 N_TURNS ++;
 
             }
             if (rect != null){
-            if (rect.getY()+10<=APPLICATION_HEIGHT){
-                rect.move(0,y_SPEED);
-            }else{
-                remove(rect);
-                rect = null;
-            }
+                if (rect.getY()+10<=APPLICATION_HEIGHT){
+                    rect.move(0,y_SPEED);
+                }else{
+                    remove(rect);
+                    rect = null;
+                }
             }
         }
     }
@@ -473,7 +473,7 @@ public class ArcadeGame extends GraphicsProgram {
 
                 }
                 jump = new SoundClip("jump.wav");
-                jump.setVolume(1);
+                jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
             } else if (collision1 == rocket) {
@@ -483,7 +483,7 @@ public class ArcadeGame extends GraphicsProgram {
 
                 }
                 jump = new SoundClip("jump.wav");
-                jump.setVolume(1);
+                jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
             } else if (collision2 == rocket) {
@@ -493,7 +493,7 @@ public class ArcadeGame extends GraphicsProgram {
 
                 }
                 jump = new SoundClip("jump.wav");
-                jump.setVolume(1);
+                jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
             } else if (collision3 == rocket) {
@@ -502,7 +502,7 @@ public class ArcadeGame extends GraphicsProgram {
                     ball.move(0, -dif);
 
                 } jump = new SoundClip("jump.wav");
-                jump.setVolume(1);
+                jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
             }
