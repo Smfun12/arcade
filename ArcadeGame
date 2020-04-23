@@ -76,6 +76,7 @@ public class ArcadeGame extends GraphicsProgram {
     private static int N_TURNS = 2;
     private int lives = N_TURNS;
     private int countBricks;
+    private int numberOfBricks;
     private static int counter = 3;
     private double vx, vy;
     private GRect rocket;
@@ -130,14 +131,14 @@ public class ArcadeGame extends GraphicsProgram {
 
     private void checkForWinner() {
         GLabel label2;
-        if (countBricks >= 100) {
+        if (countBricks >= numberOfBricks) {
             game = false;
             game1.stop();
             counter++;
             GImage win = new GImage("win.gif");
             win.scale(0.5, 0.9);
             add(win);
-            label2 = new GLabel("You win.Total points: " + 300);
+            label2 = new GLabel("You win.Total points: " + 3 * countBricks);
             label2.setFont("Ancient Modern Tales-26");
             label2.setColor(Color.blue);
             add(label2, getWidth() / 2.0 - 100, 50);
@@ -189,7 +190,7 @@ public class ArcadeGame extends GraphicsProgram {
             creatingPaddle();
 
         }
-        if (countBricks < 100 && N_TURNS == 0) {
+        if (countBricks < numberOfBricks && N_TURNS == 0) {
             game1.stop();
             removeAll();
             counter = 3;
@@ -364,6 +365,7 @@ public class ArcadeGame extends GraphicsProgram {
 
     public void creatingPaddle() {
         countBricks = 0;
+        numberOfBricks = 0;
         int height = BRICK_Y_OFFSET;
         for (int i = 0; i < NBRICK_ROWS; i++) {
             height += BRICK_HEIGHT + BRICK_SEP;
@@ -374,6 +376,7 @@ public class ArcadeGame extends GraphicsProgram {
                 brick.setColor(Color(i));
                 add(brick, width, height);
                 width += BRICK_WIDTH + BRICK_SEP;
+                numberOfBricks++;
             }
         }
     }
@@ -646,4 +649,3 @@ public class ArcadeGame extends GraphicsProgram {
     private boolean credits = false;
     private RandomGenerator r_gen = RandomGenerator.getInstance();
 }
-
