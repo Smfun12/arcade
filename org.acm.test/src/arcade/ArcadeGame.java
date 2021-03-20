@@ -1,4 +1,4 @@
-/*
+package arcade;/*
  * File: Breakout.java
  * -------------------
  * Name:
@@ -11,7 +11,6 @@ import acm.graphics.*;
 import acm.program.*;
 import acm.util.RandomGenerator;
 import acm.util.SoundClip;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -83,6 +82,7 @@ public class ArcadeGame extends GraphicsProgram {
     private GOval ball;
     private static final int DELAY = 5000;
     private GLabel cred;
+    private static final int Y_SPEED = 8;
 
     /* Method: run() */
 
@@ -99,7 +99,7 @@ public class ArcadeGame extends GraphicsProgram {
         creatingPaddle();
         GLabel label1;
         GLabel label2;
-        game1 = new SoundClip("end.wav");
+        game1 = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\end.wav");
         while (game) {
             game1.setVolume(0.25);
             game1.loop();
@@ -129,6 +129,12 @@ public class ArcadeGame extends GraphicsProgram {
 
     }
 
+    public static void main(String[] args) {
+
+        new ArcadeGame().start(args);
+
+    }
+
     private void checkForWinner() {
         GLabel label2;
         if (countBricks >= numberOfBricks) {
@@ -142,7 +148,7 @@ public class ArcadeGame extends GraphicsProgram {
             label2.setFont("Ancient Modern Tales-26");
             label2.setColor(Color.blue);
             add(label2, getWidth() / 2.0 - 100, 50);
-            SoundClip win1 = new SoundClip("win.wav");
+            SoundClip win1 = new SoundClip("arcade/win.wav");
             win1.setVolume(0.8);
             win1.play();
             pause(DELAY);
@@ -195,17 +201,17 @@ public class ArcadeGame extends GraphicsProgram {
             removeAll();
             counter = 3;
             this.setSize(875, 600);
-            GImage lose = new GImage("lose.gif");
+            GImage lose = new GImage("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\lose.gif");
             lose.scale(1.8, 2);
             add(lose);
             label2 = new GLabel("You lost. Total points: " + 3 * countBricks);
             label2.setFont("Ancient Modern Tales-36");
             label2.setColor(Color.red);
             add(label2, getWidth() / 2.0 - 125, 50);
-            SoundClip lost = new SoundClip("lost.wav");
+            SoundClip lost = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\lost.wav");
             lost.setVolume(0.35);
             lost.play();
-            game1 = new SoundClip("end.wav");
+            game1 = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\end.wav");
             menu = true;
             ball = null;
             N_TURNS = lives;
@@ -222,7 +228,6 @@ public class ArcadeGame extends GraphicsProgram {
         }
     }
 
-    private static final int Y_SPEED = 8;
 
     public void credits() {
         GLabel beginning1 = new GLabel("This game was created");
@@ -270,8 +275,7 @@ public class ArcadeGame extends GraphicsProgram {
     }
 
     public void menu() {
-
-        GImage back = new GImage("back.png");
+        GImage back = new GImage("arcade/back.png");
         back.scale(1, 1);
         add(back);
         beginning = new GLabel("Welcome to our Arcanoid game");
@@ -306,7 +310,7 @@ public class ArcadeGame extends GraphicsProgram {
         cred.setColor(Color.black);
         add(cred, getWidth() / 2.0 - 15, getHeight() / 2.0 + 85);
         addMouseListeners();
-        menu1 = new SoundClip("menu.wav");
+        menu1 = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\menu.wav");
         menu1.setVolume(0.3);
         menu1.loop();
         while (menu) {
@@ -325,7 +329,7 @@ public class ArcadeGame extends GraphicsProgram {
 
     public void setupTheGame() {
         this.setSize(APPLICATION_WIDTH + 15, APPLICATION_HEIGHT);
-        GImage back = new GImage("back.png");
+        GImage back = new GImage("arcade/back.png");
         back.scale(1, 1);
         add(back);
         rocket = new GRect(PADDLE_WIDTH, PADDLE_HEIGHT);
@@ -350,7 +354,7 @@ public class ArcadeGame extends GraphicsProgram {
                 vx *= -1;
             if (ball.getY() + BALL_RADIUS > getHeight() - (int) vy) {
                 remove(ball);
-                SoundClip fall = new SoundClip("fall.wav");
+                SoundClip fall = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\fall.wav");
                 fall.setVolume(0.7);
                 fall.play();
                 ball = null;
@@ -400,17 +404,17 @@ public class ArcadeGame extends GraphicsProgram {
                 int o = r_gen.nextInt(0,35);
                 if (o == 0 || o == 35){
                     if (rect == null){
-                        rect = new GImage("powerup.png");
+                        rect = new GImage("arcade/powerup.png");
                         rect.scale(0.04,0.04);
                         add(rect,collision.getX(),collision.getY());}
                     remove(collision);
-                    SoundClip collision2 = new SoundClip("collision.wav");
+                    SoundClip collision2 = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\collision.wav");
                     collision2.setVolume(0.4);
                     collision2.play();
 
                 }
                 remove(collision);
-                SoundClip collision2 = new SoundClip("collision.wav");
+                SoundClip collision2 = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\collision.wav");
                 collision2.setVolume(0.4);
                 collision2.play();
 
@@ -447,7 +451,7 @@ public class ArcadeGame extends GraphicsProgram {
         if (rect!=null){
             if (rect.getX()>= rocket.getX()-PADDLE_WIDTH && rect.getX()<=rocket.getX()+PADDLE_WIDTH+60 && rect.getY()+30==rocket.getY()){
                 remove(rect);
-                powerUp = new SoundClip("powerup.wav");
+                powerUp = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\powerup.wav");
                 powerUp.setVolume(0.1);
                 powerUp.play();
                 rect = null;
@@ -476,7 +480,7 @@ public class ArcadeGame extends GraphicsProgram {
                     ball.move(0, -dif);
 
                 }
-                jump = new SoundClip("jump.wav");
+                jump = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\jump.wav");
                 jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
@@ -486,7 +490,7 @@ public class ArcadeGame extends GraphicsProgram {
                     ball.move(0, -dif);
 
                 }
-                jump = new SoundClip("jump.wav");
+                jump = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\jump.wav");
                 jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
@@ -496,7 +500,7 @@ public class ArcadeGame extends GraphicsProgram {
                     ball.move(0, -dif);
 
                 }
-                jump = new SoundClip("jump.wav");
+                jump = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\jump.wav");
                 jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
@@ -505,7 +509,7 @@ public class ArcadeGame extends GraphicsProgram {
                     double dif = (ball.getY() + ball.getHeight()) - rocket.getY();
                     ball.move(0, -dif);
 
-                } jump = new SoundClip("jump.wav");
+                } jump = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\jump.wav");
                 jump.setVolume(0.3);
                 jump.play();
                 vy *= (-1);
@@ -526,7 +530,7 @@ public class ArcadeGame extends GraphicsProgram {
         }
         if (menu && !credits && !game) {
             if (e.getX() >= playGame.getX() && e.getX() <= playGame.getX() + 175 && e.getY() >= playGame.getY() && e.getY() <= playGame.getY() + 100) {
-                SoundClip click = new SoundClip("bitclick.aiff");
+                SoundClip click = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\bitclick.aiff");
                 click.setVolume(1);
                 click.play();
                 menu = false;
@@ -540,13 +544,13 @@ public class ArcadeGame extends GraphicsProgram {
         }
         if (!credits && !game) {
             if (e.getX() >= credit.getX() && e.getX() <= credit.getX() + 175 && e.getY() >= credit.getY() && e.getY() <= credit.getY() + 100) {
-                SoundClip click = new SoundClip("bitclick.aiff");
+                SoundClip click = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\bitclick.aiff");
                 click.setVolume(1);
                 click.play();
                 credits = true;
                 ball = null;
                 removeAll();
-                GImage back = new GImage("back.png");
+                GImage back = new GImage("arcade/back.png");
                 back.scale(1, 1);
                 add(back);
 
@@ -561,12 +565,12 @@ public class ArcadeGame extends GraphicsProgram {
             ball = null;
             if (credits) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    SoundClip click = new SoundClip("bitclick.aiff");
+                    SoundClip click = new SoundClip("C:\\Users\\sasha\\IdeaProjects\\arcade\\org.acm.test\\src\\arcade\\bitclick.aiff");
                     click.setVolume(1);
                     click.play();
                     credits = false;
                     removeAll();
-                    GImage back = new GImage("back.png");
+                    GImage back = new GImage("arcade/back.png");
                     back.scale(1, 1);
                     add(back);
                     beginning = new GLabel("Welcome to our Arcanoid game");
